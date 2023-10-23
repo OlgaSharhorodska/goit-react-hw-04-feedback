@@ -1,46 +1,55 @@
-import React, {useState} from 'react';
-import Statistics from './Statistics/Statistics';
-import Feedback from './Feedback/Feedback';
-import Notification from './Notification/Notification';
+import { useState } from 'react';
+import { FeedbackOption } from './Feedback/Feedback';
+import { Statistics } from './Statistics/Statistics';
+import { Notification } from './Notification/Notification';
 
-export function App() {
+export const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
 
-  function onClickButtons(e) {
-    if (e === 'Good') {
-      setGood(e => e + 1);
-    }
-    if (e === 'Neutral') {
-      setNeutral(e => e + 1);
-    }
-    if (e === 'Bad') {
-      setBad(e => e + 1);
-    }
-  }
+  const countTotalFeedback = good + neutral + bad;
 
-  const total = good + bad + neutral;
-  const percent = Math.floor((good / total) * 100);
+  const countPositiveFeedbackPercentage = () => {
+    const percent = Math.ceil((good * 100) / countTotalFeedback);
+    if (!percent) {
+      return 0;
+    } else return percent;
+  };
+
+  const buttonClick = value => {
+    switch (value) {
+      case 'good':
+        setGood(prevState => prevState + 1);
+        break;
+      case 'neutral':
+        setNeutral(prevState => prevState + 1);
+        break;
+      case 'bad':
+        setBad(prevState => prevState + 1);
+        break;
+      default:
+    }
+  };
 
   return (
-    <div className="container">
-      <div className="wrapper">
-        <p>Please leave feedback</p>
-        <Feedback onClickButtons={onClickButtons} />
-        {total !== 0 ? (
+    <>
+        <FeedbackOption
+          buttonClick={buttonClick}
+          options={['good', 'neutral', 'bad']}
+        />
+      
+        {countTotalFeedback > 0 ? (
           <Statistics
             good={good}
-            bad={bad}
             neutral={neutral}
-            total={total}
-            percent={percent}
+            bad={bad}
+            total={countTotalFeedback}
+            positiveFeedback={countPositiveFeedbackPercentage()}
           />
         ) : (
           <Notification message="There is no feedback" />
         )}
-      </div>
-    </div>
+    </>
   );
-}
-
+};

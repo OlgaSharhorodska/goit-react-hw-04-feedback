@@ -1,4 +1,4 @@
-export default function Feedback({ options, onLeaveFeedback }) {
+export default function FeedbackOption({ options, onLeaveFeedback }) {
   return (
     <div className="btn-wrapper">
       {options.map(btn => (
