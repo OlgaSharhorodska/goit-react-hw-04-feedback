@@ -1,8 +1,7 @@
-import React from 'react';
-
-function Notification(props) {
-  return <div>{props.message}</div>;
-}
-
 export default Notification;
 
+import { Message } from './Notification.styled';
+
+export const Notification = ({ message }) => {
+  return <Message>{message}</Message>;
+};
