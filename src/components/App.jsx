@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { FeedbackOption } from './Feedback/Feedback';
+import { FeedbackOption } from './FeedBack/Feedback';
 import { Statistics } from './Statistics/Statistics';
+import { Section } from './Section/Section';
 import { Notification } from './Notification/Notification';
 
 export const App = () => {
@@ -34,11 +35,13 @@ export const App = () => {
 
   return (
     <>
+      <Section title="Please leave feedback" tagItem="h1">
         <FeedbackOption
           buttonClick={buttonClick}
           options={['good', 'neutral', 'bad']}
         />
-      
+      </Section>
+      <Section title="Statistics">
         {countTotalFeedback > 0 ? (
           <Statistics
             good={good}
@@ -50,6 +53,7 @@ export const App = () => {
         ) : (
           <Notification message="There is no feedback" />
         )}
+      </Section>
     </>
   );
 };
