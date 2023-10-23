@@ -1,16 +1,21 @@
-export default function FeedbackOption({ options, onLeaveFeedback }) {
+import { Button, Buttons } from './Feedback.styled';
+
+export const FeedbackOption = ({ buttonClick, options }) => {
   return (
-    <div className="btn-wrapper">
-      {options.map(btn => (
-        <button
-          key={btn}
-          onClick={() => onLeaveFeedback(btn)}
-          className="btn"
-          type="button"
-        >
-          {btn}
-        </button>
-      ))}
-    </div>
+    <Buttons>
+      {options.map((option, idx) => {
+        return (
+          <Button
+            key={idx}
+            type="button"
+            onClick={() => {
+              buttonClick(option);
+            }}
+          >
+            {option}
+          </Button>
+        );
+      })}
+    </Buttons>
   );
-}
+};
